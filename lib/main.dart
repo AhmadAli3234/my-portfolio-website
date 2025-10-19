@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
     final themeService = Provider.of<ThemeService>(context);
 
     return MaterialApp(
+      scrollBehavior: ScrollBehavior().copyWith(
+        dragDevices: {PointerDeviceKind.mouse, PointerDeviceKind.touch},
+      ),
       title: 'Ahmad Ali | Flutter Developer',
       debugShowCheckedModeBanner: false,
       themeMode: themeService.themeMode,
@@ -157,7 +162,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   SectionDivider(),
                   SectionWrapper(
                     key: sectionKeys['Contact'],
-                    child: const ContactSection(),
+                    child: _SocialLinks(),
                   ),
                   const Footer(),
                 ],
@@ -179,7 +184,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       title: FadeInDown(
         duration: const Duration(milliseconds: 600),
         child: Text(
-          'Ahmad Ali',
+          'Portfolio',
           style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
         ),
       ),
@@ -589,7 +594,7 @@ class ProjectsSection extends StatelessWidget {
           'A clean and responsive UI that allows users to browse, search, and explore a variety of Course with detail.',
       'github': "https://github.com/AhmadAli3234/courses_ui_app",
       'live': '#',
-      'image': 'https://placehold.co/400x300/1e1e1e/2196f3?text=Ecommerce',
+      'image': 'assets/images/720.png',
     },
     {
       'title': 'Shoes Store App',
@@ -597,7 +602,7 @@ class ProjectsSection extends StatelessWidget {
           'A clean and responsive UI that allows users to browse, search, and explore a variety of shoes',
       'github': 'https://github.com/AhmadAli3234/shoes_store_app',
       'live': '#',
-      'image': '',
+      'image': 'assets/images/420.png',
     },
     {
       'title': 'Weather App',
@@ -605,14 +610,14 @@ class ProjectsSection extends StatelessWidget {
           'A responsive weather application consuming a REST API to display forecasts.',
       'github': 'https://github.com/AhmadAli3234/Weather-App',
       'live': '#',
-      'image': 'https://placehold.co/400x300/1e1e1e/2196f3?text=Weather',
+      'image': 'assets/images/weather apps.jpeg',
     },
     {
       'title': 'Car Rental App UI',
       'desc': 'A clean and responsive UI for car rental App.',
       'github': 'https://github.com/AhmadAli3234/car_rental_ui',
       'live': '#',
-      'image': 'https://placehold.co/400x300/1e1e1e/2196f3?text=Recipes',
+      'image': 'assets/images/620.png',
     },
   ];
 
@@ -689,12 +694,8 @@ class _ProjectCard extends StatelessWidget {
                 ),
                 // Using NetworkImage for placeholder (replace with AssetImage in real app)
                 image: DecorationImage(
-                  image: NetworkImage(project['image']!),
+                  image: AssetImage(project['image']!),
                   fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.3),
-                    BlendMode.dstATop,
-                  ),
                 ),
               ),
             ),
@@ -811,7 +812,7 @@ class SkillsSection extends StatelessWidget {
     },
     {
       'name': 'UI/UX Design',
-      'proficiency': 0.9,
+      'proficiency': 0.95,
       'icon': FontAwesomeIcons.palette,
     },
     {'name': 'Firebase', 'proficiency': 0.65, 'icon': FontAwesomeIcons.fire},
@@ -923,160 +924,6 @@ class _SkillIndicator extends StatelessWidget {
 
 // --- 8. CONTACT SECTION ---
 
-class ContactSection extends StatelessWidget {
-  const ContactSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final isMobile = ResponsiveBreakpoints.of(context).isMobile;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SlideInLeft(
-          child: Text(
-            'Get In Touch',
-            style: GoogleFonts.poppins(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
-            ),
-          ),
-        ),
-        const SizedBox(height: 30),
-        ResponsiveRowColumn(
-          layout: isMobile
-              ? ResponsiveRowColumnType.COLUMN
-              : ResponsiveRowColumnType.ROW,
-          rowCrossAxisAlignment: CrossAxisAlignment.start,
-          columnSpacing: 40,
-          rowSpacing: 40,
-          children: [
-            ResponsiveRowColumnItem(
-              rowFlex: 2,
-              child: FadeIn(child: _ContactForm()),
-            ),
-            ResponsiveRowColumnItem(
-              rowFlex: 1,
-              child: FadeIn(child: _SocialLinks()),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class _ContactForm extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Send a Message',
-                style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
-              _CustomTextField(
-                label: 'Name',
-                validator: (v) => v!.isEmpty ? 'Name is required' : null,
-              ),
-              const SizedBox(height: 15),
-              _CustomTextField(
-                label: 'Email',
-                validator: (v) => v!.isEmpty || !v.contains('@')
-                    ? 'Enter a valid email'
-                    : null,
-              ),
-              const SizedBox(height: 15),
-              _CustomTextField(
-                label: 'Message',
-                maxLines: 5,
-                validator: (v) => v!.isEmpty ? 'Message is required' : null,
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      print('Form submitted!');
-                      // In a real app, integrate a form submission service here
-                    }
-                  },
-                  icon: const Icon(Icons.email),
-                  label: const Text('Submit'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomTextField extends StatelessWidget {
-  final String label;
-  final int maxLines;
-  final String? Function(String?)? validator;
-
-  const _CustomTextField({
-    required this.label,
-    this.maxLines = 1,
-    this.validator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(
-            color: Theme.of(context).colorScheme.primary,
-            width: 2,
-          ),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 12,
-        ),
-      ),
-      validator: validator,
-    );
-  }
-}
-
 class _SocialLinks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -1091,11 +938,19 @@ class _SocialLinks extends StatelessWidget {
         _SocialButton(
           icon: FontAwesomeIcons.linkedin,
           text: 'LinkedIn',
-          url: '#',
+          url: 'https://www.linkedin.com/in/ahmad-ali-6205a2310/',
         ),
-        _SocialButton(icon: FontAwesomeIcons.github, text: 'GitHub', url: '#'),
+        _SocialButton(
+          icon: FontAwesomeIcons.github,
+          text: 'GitHub',
+          url: 'https://github.com/AhmadAli3234',
+        ),
 
-        _SocialButton(icon: Icons.mail, text: 'Email', url: '#'),
+        _SocialButton(
+          icon: Icons.mail,
+          text: 'Email',
+          url: 'mailto:ahmadalirj99@gmail.com',
+        ),
       ],
     );
   }
@@ -1112,7 +967,11 @@ class _SocialButton extends StatelessWidget {
     required this.url,
   });
 
-  void _launchURL() {
+  void _launchURL(String myurl) async {
+    final Uri getlink = Uri.parse(myurl);
+    if (await launchUrl(getlink, mode: LaunchMode.platformDefault)) {
+      throw Exception("Something Went wrong");
+    }
     print('Launching Social URL: $url');
   }
 
@@ -1121,7 +980,9 @@ class _SocialButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextButton.icon(
-        onPressed: _launchURL,
+        onPressed: () {
+          _launchURL(url);
+        },
         icon: FaIcon(
           icon,
           size: 18,
