@@ -923,7 +923,6 @@ class _SkillIndicator extends StatelessWidget {
 }
 
 // --- 8. CONTACT SECTION ---
-
 class _SocialLinks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
