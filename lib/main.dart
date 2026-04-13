@@ -292,7 +292,6 @@ class IntroSection extends StatelessWidget {
               BoxShadow(color: color.withOpacity(0.3), blurRadius: 20),
             ],
             image: const DecorationImage(
-              // IMPORTANT: Replace with your actual profile image asset path
               image: AssetImage('assets/images/profile_pic.jpg'),
               fit: BoxFit.fitHeight,
             ),
@@ -319,7 +318,7 @@ class IntroSection extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'A Flutter Developer.',
+            'Application Developer.',
             style: GoogleFonts.poppins(
               fontSize: ResponsiveBreakpoints.of(context).isDesktop ? 60 : 40,
               fontWeight: FontWeight.w800,
@@ -355,7 +354,8 @@ class IntroSection extends StatelessWidget {
                 text: 'Download Cv',
                 isPrimary: false,
                 onPressed: () async {
-                  const String fileId = "1uMDojJWcSRD_Y7MvCtpIvudcw9N68GYk";
+                  const String fileId = "1rvaBWUMsp1gWJhoCeTDIKg2eNTPhi-f2";
+
                   final Uri downloadUrl = Uri.parse(
                     "https://drive.google.com/uc?export=download&id=$fileId",
                   );
@@ -485,7 +485,7 @@ class AboutMeSection extends StatelessWidget {
         FadeInUp(
           delay: const Duration(milliseconds: 200),
           child: const Text(
-            'I am a passionate cross-platform mobile and web developer specializing in Flutter. My journey started one year ago, focusing on building beautiful, fast, and scalable applications backed by Firebase and REST APIs. I thrive on translating UI/UX designs into pixel-perfect, smooth user interfaces, and I am committed to continuous learning in the rapidly evolving Flutter ecosystem.',
+            'I am a passionate cross-platform mobile and web developer specializing in Flutter, with additional experience in Jetpack Compose and Kotlin Multiplatform (KMP). My journey started one year ago, focusing on building beautiful, fast, and scalable applications backed by Firebase and REST APIs. I thrive on translating UI/UX designs into pixel-perfect, smooth user interfaces, and I am committed to continuous learning in the rapidly evolving mobile development ecosystem.',
             style: TextStyle(fontSize: 16, height: 1.5),
           ),
         ),
@@ -505,6 +505,13 @@ class AboutMeSection extends StatelessWidget {
                 child: _HighlightCard(
                   title: '1 Year',
                   subtitle: 'Flutter Experience    ',
+                  icon: Icons.calendar_month,
+                ),
+              ),
+              ResponsiveRowColumnItem(
+                child: _HighlightCard(
+                  title: '3 Months',
+                  subtitle: 'KMP Experience    ',
                   icon: Icons.calendar_month,
                 ),
               ),
@@ -811,6 +818,16 @@ class SkillsSection extends StatelessWidget {
       'icon': FontAwesomeIcons.mobileScreenButton,
     },
     {
+      'name': 'JetPack Compose',
+      'proficiency': 0.9,
+      'icon': FontAwesomeIcons.mobileScreenButton,
+    },
+    {
+      'name': 'KMP',
+      'proficiency': 0.75,
+      'icon': FontAwesomeIcons.mobileScreenButton,
+    },
+    {
       'name': 'UI/UX Design',
       'proficiency': 0.95,
       'icon': FontAwesomeIcons.palette,
@@ -838,8 +855,8 @@ class SkillsSection extends StatelessWidget {
         ResponsiveRowColumn(
           layout: ResponsiveBreakpoints.of(context).isMobile
               ? ResponsiveRowColumnType.COLUMN
-              : ResponsiveRowColumnType.ROW,
-          rowMainAxisAlignment: MainAxisAlignment.spaceBetween,
+              : ResponsiveRowColumnType.COLUMN,
+          rowMainAxisAlignment: MainAxisAlignment.start,
           rowCrossAxisAlignment: CrossAxisAlignment.start,
           columnSpacing: 20,
           rowSpacing: 40,
